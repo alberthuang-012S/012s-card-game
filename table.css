@@ -1,0 +1,190 @@
+/* Shared table and rule-guided turn layout. */
+body { background:#edf0e9; }
+main { max-width:1600px; padding-top:18px; }
+.topbar { padding-top:12px; padding-bottom:12px; }
+.player-strip { display:flex; gap:22px; align-items:center; min-width:0; padding:12px 18px; border:1px solid #cbd4c8; border-radius:16px; background:#fffef9; }
+.opponent-strip { border-top:4px solid #5b698b; background:#eef0f7; }
+.human-strip { border-bottom:4px solid #366d51; background:#f1f6eb; }
+.active-player { box-shadow:0 0 0 2px #ae945d40; }
+.player-strip .score-box { background:transparent; border:0; padding:0; min-width:280px; flex-shrink:0; order:0; }
+.player-strip .score-box.active { box-shadow:none; }
+.hand-counts { display:flex; flex-direction:column; align-items:center; gap:3px; font-size:12px; white-space:nowrap; }
+.card-backs { display:flex; padding-left:12px; height:37px; }
+.card-backs i { display:grid; place-items:center; width:26px; height:36px; margin-left:-9px; border:2px solid #f5f4e9; border-radius:5px; background:repeating-linear-gradient(45deg,#25416d,#25416d 3px,#314e7d 3px,#314e7d 6px); color:#f5e9bc; font-style:normal; font-size:10px; transform:rotate(-6deg); }
+.won-customers { flex:1; min-width:0; }
+.won-customers>small { display:block; margin-bottom:3px; color:#627084; }
+.won-customers>div { display:flex; gap:5px; align-items:center; overflow-x:auto; max-height:62px; scrollbar-width:thin; }
+.won-customers button { position:relative; flex:0 0 44px; height:48px; padding:0; overflow:hidden; border:1px solid #d3d8ce; border-radius:6px; background:#fff; }
+.won-customers button img { width:100%; height:100%; object-fit:cover; }
+.won-customers button b { position:absolute; right:1px; bottom:0; padding:0 4px; border-radius:4px; background:#fffef9ed; font-size:11px; }
+.won-customers .muted { font-size:12px; }
+.opponent-activity { margin:8px 0 12px; padding:10px 16px; border-left:3px solid #8091af; background:#ffffffa8; border-radius:0 10px 10px 0; font-size:12px; }
+.opponent-activity p { color:#637084; margin-top:3px; }
+.opponent-activity.playing { background:#fff8df; border-color:#b98b3c; }
+.activity-header { display:flex; justify-content:space-between; align-items:center; }
+.opponent-activity h2 { font-size:20px; }
+.public-action-cards { display:flex; overflow-x:auto; gap:9px; margin-top:9px; }
+.public-action-cards>div { width:90px; flex-shrink:0; background:#fffef8; border:1px solid #e3d5af; border-radius:9px; overflow:hidden; }
+.public-action-cards img { width:100%; height:66px; object-fit:cover; }
+.public-action-cards span { display:block; padding:3px 5px; font-size:11px; }
+.turn-guide { margin:12px 0 16px; padding:12px 16px; border-radius:12px; background:#fffef9; border:1px solid #cfd7c9; }
+.guide-heading { display:flex; justify-content:space-between; gap:10px; margin-bottom:9px; font-size:13px; }
+.guide-heading>span { color:#687584; font-size:11px; }
+.turn-guide ol { display:flex; gap:10px; padding:0; margin:0; list-style:none; }
+.turn-guide li { flex:1; display:flex; align-items:center; gap:8px; padding:7px; border-radius:8px; color:#7c8790; background:#f4f5f0; }
+.turn-guide li>span { flex:0 0 27px; height:27px; display:grid; place-items:center; border-radius:50%; border:1px solid #cbd2c6; }
+.turn-guide li b { color:inherit; font-size:13px; }
+.turn-guide li small { display:block; font-size:10px; }
+.turn-guide li.current { color:#153d2d; background:#e2edd9; box-shadow:inset 0 0 0 1px #a7bd99; }
+.turn-guide li.current>span,.turn-guide li.done>span { background:#326444; color:#fff; border-color:#326444; }
+.turn-guide li.done { color:#4e6a55; }
+.guide-next { display:none; }
+.board-layout { grid-template-columns:minmax(0,1fr) 340px; gap:18px; }
+.table-area { gap:14px; }
+.shared-table { background:#dbe4d7; border:1px solid #bdcdb6; border-radius:20px; padding:15px; display:flex; flex-direction:column; gap:12px; box-shadow:inset 0 2px 7px #3f604908; min-width:0; }
+.shared-heading { display:flex; gap:16px; align-items:center; justify-content:space-between; min-width:0; }
+.shared-heading h1 { font-size:23px; white-space:nowrap; }
+.shared-heading h1 small { display:block; font-size:11px; color:#597052; font-weight:400; }
+.shared-heading .event-box { position:relative; flex:1; max-width:480px; border:1px solid #c5cebc; background:#f9faef; border-radius:12px; padding:9px 35px 9px 8px; gap:10px; min-width:0; }
+.shared-heading .event-box img { width:55px; height:55px; border-radius:8px; object-fit:cover; }
+.shared-heading .event-box h2 { font-size:16px; }
+.shared-heading .event-box p { font-size:11px; }
+.shared-heading .event-box small { font-size:10px; }
+.shared-heading .event-box .inspect-button { top:8px; right:7px; }
+.targets-panel,.shelf-panel { padding:13px 14px 8px; }
+.shelf-content { padding:0; }
+.shared-table .section-description { font-size:12px; margin-bottom:8px; }
+.shared-table .game-card { flex-basis:176px; }
+.shared-table .target-art,.shared-table .monster-card .target-art { height:70px; margin-top:4px; }
+.shared-table .monster-card { border-color:#b49a78; min-height:0; height:auto; width:auto; }
+.shared-table .monster-card .select-card { display:flex; }
+.shared-table .monster-card .inspect-button { top:40px; bottom:auto; left:auto; right:8px; }
+.shared-table .card-title { min-height:0; margin:6px 0; }
+.shared-table .card-meta { min-height:20px; }
+.shared-table .need-chips { margin-bottom:5px; min-height:0; }
+.shared-table .card-status { padding-top:4px; margin-top:5px; }
+.shared-table .card-meta { font-size:10px; }
+.shared-table .card-title { font-size:15px; }
+.shared-table .shelf-panel .product-card { flex-basis:165px; }
+.shared-table .shelf-panel .select-card { display:grid; grid-template-columns:44px minmax(0,1fr); gap:4px 6px; height:auto; padding:8px; }
+.shared-table .shelf-panel .card-meta,.shared-table .shelf-panel .card-status { display:none; }
+.shared-table .shelf-panel .product-art { height:46px; grid-column:1; grid-row:1; }
+.shared-table .shelf-panel .product-title { grid-column:2; grid-row:1; margin:0; flex-wrap:wrap; gap:2px; }
+.shared-table .shelf-panel .product-title strong { font-size:15px; }
+.shared-table .shelf-panel .trust-badge { display:inline-flex; flex-direction:row; gap:3px; font-size:13px; padding:3px 5px; min-width:0; }
+.shared-table .shelf-panel .trust-badge small { font-size:8px; }
+.shared-table .shelf-panel .relevant-stats { grid-column:1/-1; min-height:0; margin-top:3px; gap:2px; }
+.shared-table .shelf-panel .relevant-stats>span { font-size:10px; padding:1px 4px; }
+.shared-table .shelf-panel .inspect-button { top:9px; left:9px; right:auto; width:23px; height:23px; }
+.shared-table .shelf-panel .card-status { font-size:10px; }
+.stage-highlight { box-shadow:0 0 0 2px #a8ba80; }
+.resource-grid { grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:14px; }
+.resource-grid .game-card { flex-basis:172px; }
+.resource-grid .product-art { height:60px; }
+.resource-grid .contact-art { height:48px; }
+.resource-grid .game-card { min-height:0; }
+.resource-grid .card-title { min-height:0; }
+.resource-grid .relevant-stats { min-height:0; margin-top:5px; }
+.resource-grid .card-meta { min-height:16px; }
+.resource-grid .product-card .card-status { margin-top:6px; }
+.resource-grid .section-description { min-height:0; font-size:12px; }
+.resource-grid .eyebrow { display:none; }
+.selection-overview { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid #b9cda8; border-radius:12px; background:#f7f9ee; }
+.selection-overview>div { display:flex; gap:10px; align-items:center; min-width:0; }
+.selection-overview img { width:55px; height:50px; object-fit:cover; border-radius:7px; }
+.selection-overview b,.selection-overview small,.selection-overview span span { display:block; }
+.selection-overview b { font-size:14px; }
+.selection-overview span span { font-size:12px; color:#486139; }
+.selection-overview button { flex-shrink:0; font-size:11px; padding:6px; }
+.workspace { top:14px; max-height:calc(100dvh - 28px); }
+.workspace-content { padding:18px; }
+.workspace .match-steps span { cursor:default; }
+.match-steps button { border:1px solid #dce2d4; border-radius:7px; background:#f1f4ec; font-size:11px; padding:7px 5px; flex:1; }
+.match-steps button.current { background:#0a2864; color:#fff; }
+.match-steps button.done { background:#e5eddf; color:#326444; }
+.shared-table .monster-card .card-status { display:block; }
+.preparation-panel { background:#f4f4e8; }
+.preparation-panel summary { font-weight:600; }
+.planned { gap:4px; }
+.planned>span { flex:1; min-width:0; }
+.planned>.text-button { padding:5px; font-size:12px; }
+.mobile-dock .dock-shortcuts { display:flex; gap:4px; margin:3px 0; }
+.dock-shortcuts button { flex:1; font-size:11px; min-height:32px; padding:4px; background:#edf2e5; border:1px solid #cdd8c4; border-radius:6px; }
+[data-jump],button[data-action] { touch-action:manipulation; }
+@media(min-width:1500px) {
+  .shared-table .game-card { flex-basis:190px; }
+  .shared-table .shelf-panel .product-card { flex-basis:180px; }
+}
+@media(max-width:1100px) {
+  .board-layout { grid-template-columns:minmax(0,1fr) 305px; gap:12px; }
+  .shared-table { padding:10px; }
+  .player-strip { gap:14px; padding:12px; }
+  .player-strip .score-box { min-width:235px; }
+}
+@media(max-width:950px) {
+  .board-layout { display:flex; flex-direction:column; }
+  .table-area,.workspace { width:100%; }
+  .resource-grid { grid-template-columns:minmax(0,1fr); }
+  .workspace { position:static; max-height:none; overflow:visible; }
+  .turn-guide { padding:10px; }
+  .turn-guide li { gap:5px; }
+  .turn-guide li small { display:none; }
+  .guide-next { display:none; }
+  .mobile-dock { padding-top:6px; }
+  body { padding-bottom:160px; }
+  #toast { bottom:155px; }
+  .player-strip .score-box { min-width:210px; }
+}
+@media(max-width:600px) {
+  main { padding:12px 10px 20px; }
+  .brand small { display:none; }
+  .player-strip { flex-wrap:wrap; gap:7px 12px; padding:10px; }
+  .player-strip .score-box { flex:1; min-width:180px; }
+  .player-strip .avatar { width:30px; height:30px; font-size:11px; }
+  .player-strip .score-info { min-width:0; }
+  .player-strip .score-info b { font-size:12px; }
+  .player-strip .points { font-size:26px; }
+  .player-strip .hand-counts { font-size:10px; }
+  .card-backs { height:25px; }
+  .card-backs i { width:20px; height:25px; margin-left:-11px; font-size:8px; }
+  .won-customers { flex-basis:100%; display:flex; align-items:center; gap:10px; }
+  .won-customers>small { flex-shrink:0; font-size:10px; }
+  .won-customers>div { max-height:35px; flex:1; }
+  .won-customers button { flex-basis:31px; height:32px; }
+  .won-customers .muted { font-size:10px; }
+  .opponent-activity { padding:8px 10px; font-size:11px; }
+  .opponent-activity h2 { font-size:17px; }
+  .turn-guide ol { gap:4px; }
+  .turn-guide li { flex-direction:column; text-align:center; padding:6px 2px; gap:4px; }
+  .turn-guide li b { font-size:10px; }
+  .turn-guide li>span { flex-basis:23px; width:23px; height:23px; font-size:11px; }
+  .guide-heading { font-size:12px; }
+  .guide-heading>span { font-size:10px; }
+  .shared-table { padding:9px; border-radius:14px; gap:10px; }
+  .shared-heading { gap:8px; }
+  .shared-heading .eyebrow { font-size:8px; }
+  .shared-heading h1 { font-size:19px; }
+  .shared-heading h1 small { font-size:9px; }
+  .shared-heading .event-box { padding:7px 26px 7px 7px; gap:6px; }
+  .shared-heading .event-box img { display:none; }
+  .shared-heading .event-box h2 { font-size:13px; }
+  .shared-heading .event-box p { font-size:10px; }
+  .shared-heading .event-box .inspect-button { width:21px; height:21px; right:4px; }
+  .targets-panel,.shelf-panel { padding:10px 9px 4px; }
+  .shared-table .section-head { gap:6px; margin-bottom:9px; }
+  .shared-table .section-head h2 { font-size:15px; }
+  .shared-table .section-head h2 small { display:block; margin-left:0; font-size:10px; }
+  .shared-table .section-description { font-size:11px; }
+  .shared-table .game-card { flex-basis:160px; }
+  .shared-table .shelf-panel .product-card { flex-basis:148px; }
+  .shared-table .target-art,.shared-table .monster-card .target-art { height:70px; }
+  .resource-grid .game-card { flex-basis:165px; }
+  .shared-table .card-status { font-size:10px; }
+  .shared-table .need-chips span { font-size:11px; }
+  .selection-overview { flex-wrap:wrap; }
+  .selection-overview b { font-size:13px; }
+  .selection-overview button { margin-left:auto; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+}

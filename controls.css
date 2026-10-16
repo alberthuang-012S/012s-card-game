@@ -1,0 +1,29 @@
+/* Shared controls stay within reach while leaving space beneath the hand. */
+body[data-screen="home"] .match-tools { display:none; }
+body[data-screen="game"] .tools-menu { margin-left:auto; }
+body[data-screen="game"] { height:100dvh; overflow:hidden; display:grid; grid-template-rows:auto minmax(0,1fr) calc(84px + env(safe-area-inset-bottom)); }
+body[data-screen="game"] .topbar { grid-row:1; width:100%; }
+body[data-screen="game"] main#game.match-table { grid-row:2; height:100%; min-height:0; overflow-y:auto; margin:0 auto; padding-bottom:16px; scroll-padding-block:12px; }
+body[data-screen="game"] #toast { top:60px; bottom:auto; padding:8px 14px; }
+.match-tools { position:fixed; left:50%; bottom:calc(12px + env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:100; display:flex; align-items:center; justify-content:center; gap:8px; width:max-content; max-width:calc(100vw - 20px); padding:6px; border:1px solid #b8c5a8; border-radius:16px; background:#f9faeef5; box-shadow:0 5px 22px #203f3433; }
+.match-tools button { position:static; inset:auto; margin:0; min-width:0; min-height:46px; padding:9px 18px; border-radius:10px; font-size:14px; font-weight:650; white-space:nowrap; box-shadow:none; }
+.match-tools button[hidden] { display:none; }
+.match-tools .hint-launch { background:#e6b846; color:#382b0e; border:1px solid #ac7e20; box-shadow:inset 0 1px #fff0b8; }
+.match-tools .history-launch { background:#e7efdc; border:1px solid #8ca47c; color:#284e38; }
+.match-tools button:focus-visible { outline:3px solid #ba8e21; outline-offset:3px; }
+.match-tools .hint-launch:disabled { opacity:.45; cursor:wait; }
+.match-tools .pause-motion,.match-tools .skip-motion { display:none; }
+.motion-playing .match-tools { display:grid; grid-template-columns:1fr 1fr 1fr; width:min(460px,calc(100vw - 20px)); gap:6px; }
+.motion-playing .match-tools .hint-launch { display:none; }
+.motion-playing .match-tools .pause-motion,.motion-playing .match-tools .skip-motion { display:block; }
+.motion-playing .match-tools .pause-motion { grid-column:1; background:#f5f6ea; border:1px solid #b2bfa2; color:#38553d; }
+.motion-playing .match-tools .skip-motion { grid-column:2; background:#f4dda0; border:1px solid #b18c3c; color:#493818; }
+.motion-playing .match-tools .history-launch { grid-column:3; }
+.motion-paused .match-tools .pause-motion { background:#254e42; color:#fffbed; }
+#game.match-table .local-plan-actions { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:7px 0; }
+#game.match-table .local-plan-actions .primary-button,#game.match-table .local-plan-actions .text-button { min-width:0; min-height:44px; margin:0; padding:7px 3px; font-size:12px; border-radius:9px; white-space:nowrap; }
+#game.match-table .local-plan-actions .text-button { border:1.5px solid #78916a; background:#f3f6e7; color:#31523a; font-weight:650; }
+@media(max-width:700px) {
+ .match-tools button { font-size:13px; padding:8px 13px; }
+ .motion-playing .match-tools button { font-size:12px; padding:8px 2px; }
+}

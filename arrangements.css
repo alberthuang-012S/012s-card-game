@@ -1,0 +1,180 @@
+/* Keep the action and allocated cards beside their customer. */
+#game.match-table #customer-rail { display:grid; grid-template-columns:repeat(var(--customer-count),minmax(0,1fr)); align-items:start; justify-content:normal; gap:12px; padding:8px 5px; overflow:visible; }
+#game.match-table .customer-seat { min-width:0; position:relative; }
+#game.match-table[data-card-view] .customer-seat>.target-card { width:166px; max-width:100%; margin:0 auto; }
+#game.match-table .customer-arrangement { position:relative; padding-top:9px; margin:0 auto; max-width:230px; min-width:0; text-align:center; }
+#game.match-table .customer-arrangement::before { content:''; display:block; width:1px; height:9px; margin:-8px auto 4px; background:#9aab80; }
+#game.match-table .customer-arrangement .table-cards { padding:4px 0; gap:4px; flex-wrap:wrap; }
+#game.match-table .customer-arrangement .table-cards .staged-card { width:calc((100% - 6px)/2); max-width:104px; min-width:42px; flex:0 0 calc((100% - 6px)/2); transform:none; }
+#game.match-table .customer-arrangement .table-cards .staged-inspect img { width:100%; height:auto; aspect-ratio:63/88; }
+#game.match-table .customer-arrangement .table-cards .stage-links { display:none; }
+#game.match-table .customer-arrangement .table-cards .stage-capacity { top:auto; bottom:3px; right:1px; padding:0 2px; font-size:9px; }
+#game.match-table .customer-arrangement .table-cards .return-card { min-height:25px; font-size:10px; padding:1px 2px; }
+#game.match-table .customer-arrangement .evaluation { gap:2px 5px; padding:5px 0; font-size:10px; }
+#game.match-table .customer-arrangement .evaluation>strong { font-size:10px; }
+#game.match-table .customer-arrangement .match-reasons { width:100%; font-size:10px; text-align:center; }
+#game.match-table .local-plan-actions { display:flex; flex-direction:column; gap:2px; align-items:stretch; margin:4px 0; }
+#game.match-table .local-plan-actions .primary-button { min-height:44px; padding:7px 9px; margin:0; border-radius:9px; background:#254e42; font-size:12px; }
+#game.match-table .local-plan-actions .primary-button:disabled { opacity:.45; }
+#game.match-table .local-plan-actions .text-button { min-height:28px; padding:2px 5px; font-size:11px; }
+#game.match-table .attached-plan-status { padding:3px 0; font-size:11px; color:#37633e; }
+#game.match-table .attached-plan-tools { display:flex; justify-content:center; gap:5px; }
+#game.match-table .attached-plan-tools .text-button { min-height:30px; padding:3px; font-size:11px; }
+#game.match-table .shared-contact-link { display:block; width:100%; min-height:30px; padding:3px; font-size:10px; border:0; border-radius:5px; background:#e2ead4; color:#3d6345; }
+#game.match-table .workspace .rest-supplies { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:580px; margin:10px auto 12px; }
+#game.match-table .supply-option { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; padding:13px 8px; border:1px solid #bdcbae; border-radius:14px; background:#f9faef; box-shadow:0 3px 9px #334e3010; }
+#game.match-table .supply-option strong { font-size:14px; font-weight:500; color:#2f563e; }
+#game.match-table .supply-option>span:last-child { font-size:11px; color:#5b7054; }
+#game.match-table .supply-art { display:flex; justify-content:center; align-items:center; height:101px; width:100%; }
+#game.match-table .product-sample img { height:90px; width:65px; object-fit:contain; border-radius:6px; box-shadow:1px 3px 5px #203c2927; transform:rotate(-8deg); }
+#game.match-table .product-sample img+img { margin-left:-20px; transform:rotate(8deg); }
+#game.match-table .contact-deck i { display:flex; flex-direction:column; justify-content:center; align-items:center; height:89px; width:64px; border:3px solid #fbf2d6; border-radius:7px; background:repeating-linear-gradient(40deg,#294b5c,#294b5c 3px,#315365 3px,#315365 6px); color:#fff4d3; font-style:normal; font-size:28px; transform:rotate(-8deg); box-shadow:1px 3px 5px #203c2927; }
+#game.match-table .contact-deck i+i { margin-left:-20px; transform:rotate(8deg); }
+#game.match-table .contact-deck i span { font-size:10px; }
+#game.match-table .workspace:has(.rest-supplies),#game.match-table .workspace:has(.rest-reveals) { text-align:center; }
+#game.match-table .choice-shelf { margin:9px 0 16px; }
+#game.match-table .choice-shelf .section-head h2 { font-size:17px; color:#2d533a; }
+#game.match-table .choice-shelf .pick-instruction { font-size:12px; color:#4f6c4c; margin:0 0 7px; }
+#game.match-table[data-card-view="face"] .choice-shelf .product-card { flex:0 0 172px; }
+#game.match-table[data-card-view="face"] .choice-shelf .game-card .card-thumbnail { height:230px; }
+#game.match-table[data-card-view] .choice-shelf .game-card .select-card { background:#f8faee; border-radius:9px; padding:5px; box-shadow:0 4px 9px #324d2820; }
+#game.match-table .choice-shelf .game-card .inspect-button { top:4px; bottom:auto; right:3px; }
+#game.match-table[data-card-view="compact"] .choice-shelf .product-card { flex-basis:160px; }
+#game.match-table[data-card-view="compact"] .choice-shelf .game-card .select-card { display:flex; height:auto; padding:7px; }
+#game.match-table[data-card-view="compact"] .choice-shelf .game-card .product-art { width:100%; height:110px; }
+#game.match-table .supply-option:disabled { opacity:.45; }
+#game.match-table .rest-reveals { display:flex; justify-content:center; flex-wrap:wrap; gap:18px; padding:10px 0 14px; }
+#game.match-table .rest-reveal { position:relative; width:190px; max-width:calc(50% - 9px); }
+#game.match-table .rest-reveal .rest-choice { display:flex; flex-direction:column; width:100%; gap:8px; align-items:center; padding:4px; border:0; background:transparent; border-radius:9px; }
+#game.match-table .rest-reveal .rest-choice img { display:block; width:100%; height:auto; aspect-ratio:63/88; object-fit:contain; border-radius:7px; box-shadow:1px 3px 0 #b6c1a8,0 5px 12px #1e3c2625; }
+#game.match-table .rest-reveal .rest-choice>span { display:block; width:100%; min-height:40px; padding:8px; border-radius:8px; background:#254e42; color:#fffdf0; font-size:12px; }
+#game.match-table .rest-reveal .inspect-button { top:6px; right:6px; width:28px; height:28px; }
+@media(max-width:950px) {
+  #game.match-table #customer-rail { grid-template-columns:minmax(0,1fr) 82px; grid-template-rows:repeat(var(--other-customers),minmax(52px,auto)); gap:6px 10px; padding:4px; }
+  #game.match-table .customer-seat { grid-column:2; max-width:82px; width:100%; justify-self:center; }
+  #game.match-table .customer-seat:not(.focused):not(.has-plan) { grid-row:var(--seat-row); }
+  #game.match-table[data-card-view] #customer-rail .customer-seat>.target-card { grid-column:auto; grid-row:auto; }
+  #game.match-table .customer-seat.focused { grid-column:1; grid-row:1 / span var(--other-customers); max-width:none; }
+  #game.match-table[data-card-view] #customer-rail .customer-seat .target-card { width:100%; max-width:82px; }
+  #game.match-table[data-card-view] #customer-rail .customer-seat.focused>.target-card { max-width:230px; margin:auto; }
+  #game.match-table .customer-seat.has-plan:not(.focused) { grid-column:1/-1; max-width:none; display:grid; grid-template-columns:90px minmax(0,1fr); align-items:start; gap:10px; padding-top:8px; }
+  #game.match-table .customer-seat.has-plan:not(.focused) .customer-arrangement { max-width:250px; width:100%; margin:0 auto; padding-top:0; }
+  #game.match-table[data-card-view] #customer-rail .customer-seat.has-plan:not(.focused)>.target-card { grid-column:1; grid-row:1; }
+  #game.match-table .customer-seat.has-plan:not(.focused)>.customer-arrangement { grid-column:2; grid-row:1; }
+  #game.match-table .customer-seat.has-plan:not(.focused) .customer-arrangement::before { display:none; }
+  #game.match-table[data-card-view="face"] #customer-rail .customer-seat.has-plan:not(.focused) .target-card .card-thumbnail { height:108px; width:78px; }
+  #game.match-table[data-card-view="face"] #customer-rail .customer-seat.has-plan:not(.focused) .target-card .select-card { padding-bottom:3px; }
+  #game.match-table .customer-arrangement { max-width:220px; }
+  #game.match-table .customer-arrangement .table-cards .staged-card { width:calc((100% - 6px)/2); flex-basis:calc((100% - 6px)/2); }
+  #game.match-table .customer-arrangement .table-cards .return-card { min-height:32px; font-size:11px; }
+  #game.match-table .customer-arrangement .table-cards .stage-capacity { bottom:3px; }
+  #game.match-table .local-plan-actions .text-button { min-height:32px; }
+  #game.match-table .choice-shelf .section-head h2 { font-size:15px; }
+  #game.match-table .choice-shelf .section-head h2 small { display:block; margin-left:0; }
+  #game.match-table .choice-shelf .pick-instruction { font-size:11px; }
+  #game.match-table[data-card-view="face"] .choice-shelf .product-card { flex-basis:132px; }
+  #game.match-table[data-card-view="face"] .choice-shelf .game-card .card-thumbnail { height:176px; }
+  #game.match-table .workspace .rest-supplies { gap:9px; }
+  #game.match-table .supply-option { padding:10px 5px; }
+  #game.match-table .supply-option strong { font-size:12px; }
+  #game.match-table .supply-option>span:last-child { font-size:10px; }
+  #game.match-table .rest-reveals { gap:12px; }
+  #game.match-table .rest-reveal { max-width:calc(50% - 6px); }
+}
+
+/* Keep all turn controls on the table, centered between the cards and hand. */
+#game.match-table .mobile-dock.turn-actions { justify-content:center; flex-direction:column; align-items:center; gap:5px; padding:9px 0 12px; background:transparent; border-radius:0; }
+#game.match-table .turn-actions .primary-button { width:min(100%,300px); max-width:100%; min-width:0; min-height:46px; font-size:14px; }
+#game.match-table .turn-actions.secondary-action .primary-button { background:#ffffff80; color:#345846; border:1px solid #94ab8d; width:auto; min-width:140px; }
+#game.match-table .table-match:empty,#game.match-table .table-prompt:empty,#game.match-table .workspace p:empty { display:none; }
+#game.match-table .table-piles { padding:5px 0; opacity:.75; }
+#game.match-table .table-piles .save-state:not(.save-error) { display:none; }
+#game.match-table[data-card-view="face"] .targets-panel .target-card.reserved .card-status { display:none; }
+#game.match-table[data-card-view="face"] .targets-panel .target-card.reserved .card-thumbnail img { opacity:1; }
+#game.match-table .score-info small,#game.match-table .human-strip .hand-counts { display:none; }
+#game.match-table .hand-tray { padding-top:5px; }
+#game.match-table .shared-table { padding-inline:16px; }
+#game.match-table .match-bar { padding-top:10px; }
+/* Lift the face while the exposed edge remains a stable place to select a card. */
+#game.match-table[data-card-view="face"] #hand-rail .game-card { pointer-events:none; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card .select-card { pointer-events:none; box-shadow:none; border:0; background:transparent; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card .select-card::after { content:''; position:absolute; inset:0 auto 0 0; width:var(--fan-hit-width); pointer-events:auto; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card .inspect-button { pointer-events:auto; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card .card-thumbnail { border:1px solid #d6d5be; border-radius:9px; background:#fffdf2; box-shadow:1px 2px 0 #eee9d7,2px 4px 0 #c5c5af,0 8px 14px #31433128; transition:transform .16s ease; transform-origin:50% 100%; }
+@media(hover:hover) and (pointer:fine) and (min-width:951px) {
+  #game.match-table[data-card-view="face"] #hand-rail .game-card:hover,#game.match-table[data-card-view="face"] #hand-rail .game-card:focus-within { transform:translateY(var(--fan-y)) rotate(var(--fan-angle)); }
+  #game.match-table[data-card-view="face"] #hand-rail .game-card:hover .card-thumbnail,#game.match-table[data-card-view="face"] #hand-rail .game-card:focus-within .card-thumbnail { transform:translateY(-40px) rotate(calc(-1 * var(--fan-angle))) scale(1.2); }
+}
+@media(prefers-reduced-motion:reduce) {
+  #game.match-table[data-card-view="face"] #hand-rail .game-card .card-thumbnail { transition:none; }
+}
+@media(max-width:950px) {
+  #game.match-table .shared-table { padding-inline:10px; }
+  #game.match-table .local-plan-actions .primary-button { font-size:13px; }
+}
+
+#game.match-table .table-piles .save-error { display:inline; color:#934821; }
+#game.match-table .customer-arrangement .table-cards .tentative .stage-capacity { bottom:34px; }
+@media(max-width:950px) {
+  #game.match-table .customer-arrangement .table-cards .tentative .stage-capacity { bottom:40px; }
+}
+
+/* Give the active cards the table; keep optional public products at its edge. */
+main#game.match-table { max-width:1480px; }
+#game.match-table .match-center { display:grid; grid-template-columns:auto auto; align-items:center; justify-content:center; gap:3px 12px; min-width:0; }
+#game.match-table .match-center>span { grid-column:1; align-self:end; }
+#game.match-table .match-center>small { grid-column:1; align-self:start; }
+#game.match-table .day-card { grid-column:2; grid-row:1/3; display:block; width:88px; margin:0; padding:0; min-height:0; line-height:0; }
+#game.match-table .day-card img { display:block; width:100%; height:123px; object-fit:contain; border-radius:7px; box-shadow:1px 3px 0 #bac4a8,0 4px 10px #23402c25; }
+#game.match-table .shared-table:has(.side-shelf) { padding-right:80px; }
+#game.match-table #customer-rail { grid-template-columns:repeat(var(--customer-count),minmax(176px,1fr)); overflow-x:auto; overflow-y:hidden; }
+#game.match-table[data-card-view] .customer-seat>.target-card { width:190px; }
+#game.match-table[data-card-view="face"] .targets-panel .game-card .card-thumbnail { height:258px; }
+#game.match-table .customer-arrangement { max-width:250px; }
+#game.match-table .customer-arrangement .table-cards .staged-card { max-width:118px; }
+#game.match-table .shared-table>.side-shelf { position:absolute; top:0; right:10px; width:54px; z-index:22; }
+#game.match-table .side-shelf details { padding:0; background:none; border:0; }
+#game.match-table .side-shelf summary { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; list-style:none; font-size:11px; text-align:center; color:#355940; padding:7px 3px; border:1px solid #acbb9c; border-radius:10px; background:#f8f9ec; }
+#game.match-table .side-shelf summary::-webkit-details-marker { display:none; }
+#game.match-table .shelf-deck { display:grid; place-items:center; width:33px; height:46px; border:2px solid #f9f0d5; outline:1px solid #829b7c; border-radius:4px; box-shadow:2px 2px 0 #a8b99b,4px 4px 0 #ccd6b9; background:repeating-linear-gradient(45deg,#31544a,#31544a 3px,#3e6254 3px,#3e6254 6px); color:#fff4d4; font-size:18px; }
+#game.match-table .shelf-toggle { font-size:10px; }
+#game.match-table .side-shelf details[open] .shelf-toggle { font-size:0; }
+#game.match-table .side-shelf details[open] .shelf-toggle::after { content:'收起'; font-size:10px; }
+#game.match-table .side-shelf-content { position:absolute; right:calc(100% + 8px); top:0; width:min(650px,calc(100vw - 105px)); padding:12px; border:1px solid #a3b794; border-radius:13px; background:#fafbed; box-shadow:0 12px 35px #213e3340; }
+#game.match-table .side-shelf-content .section-head { margin-bottom:4px; }
+#game.match-table .side-shelf-content .text-button { min-height:36px; padding:4px 8px; margin:0; font-size:12px; }
+#game.match-table[data-card-view="face"] .side-shelf .product-card { flex:0 0 153px; }
+#game.match-table[data-card-view="face"] .side-shelf .game-card .card-thumbnail { height:208px; }
+#game.match-table[data-card-view="face"] .choice-shelf .product-card { flex-basis:192px; }
+#game.match-table[data-card-view="face"] .choice-shelf .game-card .card-thumbnail { height:260px; }
+#game.match-table #hand-rail { height:346px; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card { top:66px; height:254px; }
+#game.match-table[data-card-view="face"] #hand-rail .game-card:hover,#game.match-table[data-card-view="face"] #hand-rail .game-card:focus-within { transform:translateY(var(--fan-y)) rotate(var(--fan-angle)); }
+#game.match-table[data-phase="finished"] .workspace { text-align:center; padding:14px 0; }
+#game.match-table[data-phase="finished"] .workspace [data-action="new"] { width:min(100%,300px); margin:12px auto; }
+@media(max-width:950px) {
+  #game.match-table .match-center { gap:2px 5px; grid-template-columns:40px 66px; }
+  #game.match-table .day-card { width:66px; }
+  #game.match-table .day-card img { height:92px; }
+  #game.match-table .shared-table:has(.side-shelf) { padding-right:10px; }
+  #game.match-table #customer-rail { grid-template-columns:minmax(0,1fr) repeat(2,42px); grid-template-rows:none; grid-auto-rows:auto; gap:6px; overflow:visible; }
+  #game.match-table .customer-seat:not(.focused):not(.has-plan) { grid-column:var(--seat-column); max-width:42px; }
+  #game.match-table .customer-seat.focused { grid-row:1 / span var(--other-rows); }
+  #game.match-table .shared-table>.side-shelf { right:10px; top:0; width:122px; }
+  #game.match-table .side-shelf summary { flex-direction:row; justify-content:center; min-height:32px; gap:4px; padding:3px 5px; font-size:10px; }
+  #game.match-table .side-shelf .shelf-deck { display:none; }
+  #game.match-table .targets-panel>.section-head { padding-right:126px; min-height:34px; }
+  #game.match-table .shared-table:has(.side-shelf) .targets-panel>.section-head .rail-nav { display:none; }
+  #game.match-table .side-shelf-content { top:38px; right:0; width:min(650px,calc(100vw - 42px)); padding:9px; }
+  #game.match-table[data-card-view="face"] #customer-rail .target-card.focused .card-thumbnail { height:258px; }
+  #game.match-table[data-card-view="face"] #customer-rail .target-card:not(.focused) .card-thumbnail { height:56px; }
+  #game.match-table[data-card-view="face"] .choice-shelf .product-card { flex-basis:148px; }
+  #game.match-table[data-card-view="face"] .choice-shelf .game-card .card-thumbnail { height:198px; }
+  #game.match-table #hand-rail { height:266px; }
+  #game.match-table[data-card-view="face"] #hand-rail .game-card { top:32px; height:195px; }
+}
+.effect-prepare { display:block; width:100%; min-height:44px; margin:3px 0; padding:5px 2px; border:1px solid #78916b; border-radius:7px; background:#e9efd9; color:#32553d; font-size:11px; }
+.effect-cost { display:block; font-size:9px; line-height:1.6; text-align:center; color:#6b735c; }
+#game.match-table .trust-effects { min-width:0; font-size:10px; }
+#game.match-table .trust-effects summary { cursor:pointer; min-height:28px; padding:4px 0; }
+#game.match-table .trust-effects>div { padding:4px 6px; border-radius:6px; color:#426342; background:#e6edd9; line-height:1.8; }

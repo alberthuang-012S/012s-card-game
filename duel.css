@@ -1,0 +1,265 @@
+/* Competition presentation; the underlying card and turn rules are unchanged. */
+.shared-table { position:relative; background:radial-gradient(ellipse at 50% 30%,#e5ecda,#d3dfca); border:2px solid #bcc8ae; box-shadow:inset 0 0 30px #55754a10,0 5px 15px #2c4b3610; }
+.game-card { transition:transform .16s,box-shadow .16s,border-color .16s; }
+.game-card:hover:has(.select-card:not(:disabled)) { transform:translateY(-3px); box-shadow:0 7px 15px #173a3520; }
+.game-card.selected { box-shadow:0 0 0 2px #c29c51,0 6px 16px #19374a20; transform:translateY(-3px); }
+.game-card.watched { border-color:#c58c2e; }
+.target-card.available .score-badge { background:#dfedd4; color:#2f633e; }
+.target-card.available .score-badge::after { content:' ✓'; font-size:10px; }
+.watch-button { position:absolute; bottom:5px; right:6px; border:1px solid #ded8bd; border-radius:5px; background:#fffdf2; color:#8e692c; font-size:10px; padding:3px 6px; min-height:24px; }
+.target-card .select-card { padding-bottom:34px; }
+.watch-button[aria-pressed="true"] { background:#fae7ab; border-color:#c49d4d; }
+.race-summary { display:flex; align-items:center; gap:14px; font-size:12px; padding:5px 12px; }
+.race-summary>span { color:#60715e; font-size:11px; }
+.watch-notice { color:#a44d25; font-size:12px; }
+.table-piles { display:flex; gap:6px; justify-content:flex-end; }
+.table-piles span { border:1px solid #bac9b2; border-radius:4px; padding:1px 7px; font-size:9px; color:#687b5c; background:#f4f5e6; box-shadow:1px 2px 0 #bbc8ae; }
+.drawer-close { display:none; }
+.draft-visual { display:flex; gap:6px; align-items:center; padding:8px; margin:9px 0; border:1px dashed #a8b994; border-radius:10px; background:#f2f5e9; }
+.draft-visual>div { flex:0 1 62px; min-width:0; padding:4px; background:#fffef5; border:1px solid #ced7bf; border-radius:6px; box-shadow:0 2px 4px #253b2710; }
+.draft-visual>.draft-goal { border-color:#bc9d68; }
+.draft-visual img { width:100%; height:42px; object-fit:contain; border-radius:3px; }
+.draft-visual b { display:block; font-size:9px; line-height:1.4; }
+.draft-visual>span { font-size:11px; color:#718063; padding:5px; }
+.workspace-content:has(.draft-visual) .draft-summary { display:none; }
+.history-list { list-style:none; margin:0; padding:0; max-height:60dvh; overflow:auto; }
+.history-list li { padding:9px 0; border-bottom:1px solid #e1e4d7; font-size:12px; }
+.history-list small { display:block; color:#72816a; }
+.opponent-activity.playing { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.opponent-activity.playing>div { min-width:0; }
+.opponent-activity.playing span { font-size:11px; color:#6c725f; margin-left:9px; }
+.opponent-activity.playing button { flex-shrink:0; font-size:11px; }
+.skip-motion { display:none; position:fixed; right:18px; bottom:16px; z-index:100; background:#fff7da; border:1px solid #b2985d; border-radius:30px; padding:10px 18px; box-shadow:0 4px 20px #192d3320; font-weight:600; }
+.motion-playing .skip-motion { display:block; }
+.motion-playing #game { pointer-events:none; }
+.motion-playing #game [data-action="skip-ai"] { pointer-events:auto; }
+#motion-layer { position:fixed; inset:0; z-index:80; pointer-events:none; overflow:hidden; }
+.flying-card { position:fixed; display:flex; flex-direction:column; padding:6px; background:#fffef4; border:2px solid #b9cfa1; border-radius:9px; box-shadow:0 8px 28px #152f4340; overflow:hidden; }
+.flying-card>span { font-size:9px; color:#85734f; }
+.flying-card img { width:100%; min-height:0; height:70%; object-fit:contain; border-radius:4px; background:#f0f2e7; }
+.flying-card>b { font-size:11px; margin-top:4px; line-height:1.3; color:#163953; }
+.rival-flight { border-color:#a78169; }
+.rival-pointer { position:fixed; width:44px; height:44px; border:3px solid #ba7f43; border-radius:50%; transform:translate(-50%,-50%); box-shadow:0 0 0 8px #ecbe6330; animation:pointer-pulse .45s ease-out infinite; }
+@keyframes pointer-pulse { from {opacity:.5;scale:.75} to {opacity:1;scale:1.15} }
+.trade-stage { position:fixed; left:50%; top:48%; transform:translate(-50%,-50%); width:min(560px,92vw); padding:20px 24px; border:2px solid #8ea57b; border-radius:20px; background:#fffef5f8; box-shadow:0 12px 65px #142d4360,0 0 0 100vmax #1935301a; text-align:center; }
+.rival-stage { border-color:#a87b56; }
+.trade-stage>small { color:#776d4e; letter-spacing:.08em; }
+.trade-stage h2 { font-size:23px; margin:4px 0 12px; }
+.stage-cards { display:flex; justify-content:center; gap:12px; min-height:124px; }
+.stage-cards .stage-card { position:relative; width:96px; height:123px; box-shadow:0 3px 10px #1f3a3320; }
+.stage-needs { display:flex; justify-content:center; flex-wrap:wrap; gap:7px; margin-top:15px; }
+.stage-needs span { opacity:0; transform:translateY(4px); padding:4px 10px; border-radius:6px; background:#e0eed4; color:#285733; font-size:13px; transition:opacity .15s,transform .15s; }
+.stage-needs span.checked { opacity:1; transform:none; }
+.trade-stage>p { font-size:12px; margin:9px 0; color:#68735c; }
+.stage-stamp { display:inline-block; opacity:0; color:#31674a; font-size:24px; border:2px solid #62946c; border-radius:7px; padding:3px 24px; transform:rotate(-5deg) scale(1.5); }
+.stage-stamp.stamped { opacity:1; transform:rotate(-5deg) scale(1); transition:transform .18s,opacity .12s; }
+@media(min-width:951px) and (min-height:650px) {
+  body { height:100dvh; overflow:hidden; padding-bottom:0; }
+  .topbar { height:60px; padding:8px 18px; gap:10px; }
+  .brand small { display:none; }
+  .topbar nav { gap:4px; flex-wrap:nowrap; }
+  .topbar nav button { font-size:11px; padding:5px 7px; min-height:30px; }
+  .topbar .offline { display:none; }
+  main { height:calc(100dvh - 60px); display:flex; flex-direction:column; gap:6px; padding:8px 18px 12px; max-width:1800px; }
+  body>footer { display:none; }
+  .opponent-strip { flex:0 0 55px; padding:5px 13px; min-height:0; gap:22px; }
+  .opponent-strip .score-box { min-width:235px; }
+  .player-strip .points { font-size:27px; }
+  .player-strip .score-info b { font-size:12px; }
+  .player-strip .score-info small { font-size:9px; }
+  .card-backs { height:28px; }
+  .card-backs i { height:28px; width:22px; }
+  .opponent-strip .won-customers>div { height:33px; }
+  .opponent-strip .won-customers button { height:30px; flex-basis:32px; }
+  .won-customers>small { font-size:9px; margin:0; }
+  .race-summary { flex:0 0 21px; padding:0 10px; }
+  .opponent-activity { flex:0 0 28px; margin:0; padding:3px 10px; min-height:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .opponent-activity:not(.playing) { display:flex; align-items:center; gap:12px; }
+  .opponent-activity p { margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:11px; }
+  .opponent-activity.playing span { display:none; }
+  .turn-guide { flex:0 0 48px; padding:4px 8px; margin:0; display:flex; gap:12px; align-items:center; }
+  .guide-heading { flex:0 0 150px; display:block; margin:0; }
+  .guide-heading>span { display:block; font-size:10px; }
+  .turn-guide ol { flex:1; gap:5px; }
+  .turn-guide li { padding:5px 7px; gap:5px; }
+  .turn-guide li b { font-size:11px; }
+  .turn-guide li small { display:none; }
+  .turn-guide li>span { flex-basis:23px; height:23px; font-size:10px; }
+  .board-layout { flex:1; min-height:0; grid-template-columns:minmax(0,1fr) 305px; gap:12px; }
+  .table-area { min-height:0; gap:9px; height:100%; }
+  .shared-table { flex:1; min-height:0; padding:8px 10px 20px; border-radius:15px; gap:6px; }
+  .shared-heading { flex:0 0 36px; gap:15px; }
+  .shared-heading .eyebrow,.shared-heading h1 small { display:none; }
+  .shared-heading h1 { font-size:19px; }
+  .shared-heading .event-box { max-width:480px; height:36px; padding:3px 30px 3px 5px; gap:8px; }
+  .shared-heading .event-box img { width:28px; height:28px; }
+  .shared-heading .event-box>div { display:flex; align-items:center; gap:8px; }
+  .shared-heading .event-box small { display:none; }
+  .shared-heading .event-box h2 { font-size:13px; white-space:nowrap; }
+  .shared-heading .event-box p { font-size:10px; line-height:1.3; }
+  .shared-heading .event-box .inspect-button { width:22px; height:22px; top:5px; }
+  .table-piles { position:absolute; bottom:4px; right:12px; height:14px; }
+  .table-piles span { font-size:8px; padding:0 5px; }
+  .targets-panel { flex:1; min-height:0; display:flex; flex-direction:column; padding:7px 9px; }
+  .shared-table .section-head { margin:0 0 4px; min-height:20px; }
+  .shared-table .section-head h2 { font-size:14px; }
+  .shared-table .section-head h2 small { font-size:10px; }
+  .shared-table .section-description { display:none; }
+  .shared-table .card-rail { padding:2px 2px 4px; gap:7px; min-height:0; }
+  .targets-panel>.card-rail { flex:1; }
+  .shared-table .target-card { flex:1 0 0; min-width:0; }
+  .shared-table .target-card .select-card { padding:6px 6px 27px; }
+  .shared-table .target-card.selected .select-card { padding:5px 5px 26px; }
+  .shared-table .target-card .card-meta { min-height:17px; font-size:8px; }
+  .shared-table .score-badge { font-size:13px; line-height:18px; }
+  .shared-table .target-art,.shared-table .monster-card .target-art { height:clamp(40px,9dvh,90px); margin-top:3px; flex-shrink:1; }
+  .shared-table .target-art img { object-fit:contain; }
+  .shared-table .target-card .card-title { font-size:12px; margin:4px 0; line-height:1.3; }
+  .shared-table .need-chips { gap:3px; margin-bottom:3px; }
+  .shared-table .need-chips>span { font-size:9px; padding:0 3px; }
+  .shared-table .need-chips b { font-size:10px; margin-left:2px; }
+  .shared-table .card-foot { font-size:8px; }
+  .shared-table .target-card .card-status { display:none; }
+  .shared-table .target-card .inspect-button { width:23px; height:23px; top:27px; right:5px; }
+  .watch-button { padding:1px 5px; min-height:20px; font-size:9px; }
+  .shelf-panel { flex:0 0 93px; min-height:0; padding:5px 9px; }
+  .shelf-panel .eyebrow { display:none; }
+  .shelf-content { height:65px; }
+  .shelf-panel .card-rail { height:100%; }
+  .shared-table .shelf-panel .product-card { flex:1 0 0; min-width:0; }
+  .shared-table .shelf-panel .select-card { padding:4px; grid-template-columns:34px minmax(0,1fr); gap:2px 5px; }
+  .shared-table .shelf-panel .product-art { height:40px; grid-row:1/3; }
+  .shared-table .shelf-panel .product-title strong { font-size:12px; }
+  .shared-table .shelf-panel .trust-badge { font-size:11px; padding:2px 4px; }
+  .shared-table .shelf-panel .trust-badge small { font-size:7px; }
+  .shared-table .shelf-panel .relevant-stats { grid-column:2; margin:0; gap:1px; }
+  .shared-table .shelf-panel .relevant-stats>span { font-size:8px; padding:0 3px; }
+  .shared-table .shelf-panel .relevant-stats>span:nth-child(n+3) { display:none; }
+  .shared-table .shelf-panel .relevant-stats b { font-size:9px; }
+  .shared-table .shelf-panel .inspect-button { width:21px; height:21px; top:3px; left:3px; }
+  .hand-tray { flex:0 0 clamp(190px,26dvh,245px); min-height:0; display:flex; flex-direction:column; gap:5px; }
+  .human-strip { flex:0 0 31px; min-height:0; padding:2px 10px; border-radius:9px; border-bottom-width:2px; gap:15px; }
+  .human-strip .score-box { min-width:190px; gap:8px; }
+  .human-strip .score-info small,.human-strip .score-progress,.human-strip .avatar { display:none; }
+  .human-strip .points { font-size:22px; }
+  .human-strip .hand-counts { font-size:10px; }
+  .human-strip .won-customers { display:flex; align-items:center; gap:9px; }
+  .human-strip .won-customers>div { height:25px; }
+  .human-strip .won-customers button { height:24px; flex-basis:26px; }
+  .human-strip .won-customers .muted { font-size:10px; }
+  .selection-overview { display:none; }
+  .resource-grid { flex:1; min-height:0; gap:10px; }
+  .resource-grid>section { display:flex; flex-direction:column; min-height:0; padding:6px 9px; border-radius:11px; }
+  .resource-grid .section-head { margin-bottom:3px; }
+  .resource-grid .section-head h2 { font-size:13px; }
+  .resource-grid .section-description { display:none; }
+  .resource-grid .card-rail { flex:1; min-height:0; padding:2px 2px 3px; gap:7px; }
+  .resource-grid .game-card { flex-basis:126px; }
+  .resource-grid .select-card { padding:6px; }
+  .resource-grid .game-card.selected .select-card { padding:5px; }
+  .resource-grid .card-meta { display:none; }
+  .resource-grid .product-title { margin:0 0 4px; }
+  .resource-grid .product-title strong { font-size:13px; }
+  .resource-grid .trust-badge { min-width:25px; padding:3px; font-size:14px; }
+  .resource-grid .trust-badge small { font-size:7px; }
+  .resource-grid .product-art { height:clamp(30px,5dvh,48px); }
+  .resource-grid .product-card .inspect-button { top:37px; right:5px; width:22px; height:22px; }
+  .resource-grid .relevant-stats { margin-top:4px; gap:2px; }
+  .resource-grid .relevant-stats>span { font-size:9px; padding:0 3px; }
+  .resource-grid .relevant-stats b { font-size:10px; }
+  .resource-grid .product-card .card-status { display:none; }
+  .resource-grid .contact-art { height:33px; }
+  .resource-grid .card-title { font-size:12px; margin:4px 0; }
+  .resource-grid .contact-values { font-size:9px; }
+  .resource-grid .contact-effect { font-size:9px; line-height:1.4; }
+  .resource-grid .contact-card .card-status { font-size:8px; margin-top:3px; padding-top:3px; }
+  .resource-grid .contact-card .inspect-button { top:8px; right:5px; width:21px; height:21px; }
+  .rail-nav button { width:22px; height:22px; font-size:16px; }
+  .workspace { position:static; height:100%; max-height:none; overflow:auto; }
+  .workspace-content { padding:12px; }
+  .workspace h2 { font-size:18px; }
+  .workspace .primary-action { position:sticky; bottom:-12px; padding:9px 0 0; background:#fffef9; z-index:2; }
+  main>.ai-report,main>.history { display:none; }
+  .tutorial-banner { margin:0; padding:5px 12px; flex-shrink:0; font-size:11px; }
+  .tutorial-banner p { font-size:10px; }
+  .tutorial-banner button { min-height:28px; padding:4px 8px; font-size:10px; }
+  #toast { bottom:18px; }
+}
+@media(max-width:1100px) and (min-width:951px) {
+  .brand strong { font-size:14px; }
+  .brand-mark { width:30px; height:30px; font-size:20px; }
+  .topbar nav button { font-size:10px; padding:4px; }
+  .board-layout { grid-template-columns:minmax(0,1fr) 280px; }
+  .shared-table .target-card .card-title { font-size:11px; }
+}
+@media(max-width:950px) {
+  .topbar nav { flex-wrap:wrap; justify-content:flex-start; gap:3px; }
+  .topbar nav button { flex-shrink:0; white-space:nowrap; font-size:10px; padding:4px 7px; min-height:29px; }
+  .opponent-strip { padding:7px 10px; }
+  .race-summary { flex-wrap:wrap; gap:2px 9px; padding:5px 3px; }
+  .race-summary>span { font-size:10px; }
+  .opponent-activity { font-size:11px; margin:2px 0 8px; padding:6px 9px; }
+  .opponent-activity:not(.playing)>p { display:none; }
+  .opponent-activity.playing span { display:none; }
+  .opponent-activity.playing button { padding:3px; font-size:10px; }
+  .turn-guide { padding:7px; margin:7px 0; }
+  .guide-heading { margin-bottom:5px; }
+  .turn-guide li { padding:4px 2px; }
+  .shared-table .section-description { font-size:10px; }
+  .shared-table .target-card { flex-basis:156px; }
+  .shared-table .target-card .select-card { padding-bottom:35px; }
+  .shared-table .card-foot { font-size:9px; }
+  .table-piles { justify-content:flex-start; }
+  .table-piles span { font-size:8px; }
+  .hand-tray { position:fixed; left:0; right:0; bottom:129px; z-index:12; max-height:54dvh; overflow:auto; display:none; background:#f5f7ec; border-top:2px solid #7a9870; border-radius:17px 17px 0 0; box-shadow:0 -8px 30px #173b2e25; padding:8px 10px 10px; }
+  #game[data-panel="products"] .hand-tray,#game[data-panel="contacts"] .hand-tray { display:block; }
+  .hand-tray .human-strip { padding:4px 7px; border-radius:8px; margin-bottom:6px; }
+  .hand-tray .human-strip .score-box { min-width:135px; }
+  .hand-tray .human-strip .points { font-size:20px; }
+  .hand-tray .human-strip .score-info small,.hand-tray .human-strip .won-customers,.hand-tray .human-strip .score-progress,.hand-tray .human-strip .avatar { display:none; }
+  .drawer-close { display:block; position:absolute; top:5px; right:8px; border:0; background:#e9efdd; border-radius:5px; font-size:10px; padding:3px 7px; }
+  .hand-tray .human-strip .hand-counts { margin-right:83px; font-size:9px; }
+  .selection-overview { margin-bottom:6px; padding:6px; }
+  .selection-overview img { width:35px; height:35px; }
+  .selection-overview b { font-size:12px; }
+  .selection-overview span span { font-size:10px; }
+  .selection-overview button { display:none; }
+  .resource-grid { display:block; }
+  .resource-grid>section { padding:8px 9px; }
+  #game[data-panel="products"] .contacts-panel,#game[data-panel="contacts"] .hand-panel { display:none; }
+  .resource-grid .section-description { font-size:10px; }
+  .resource-grid .game-card { flex-basis:145px; }
+  .resource-grid .product-art { height:48px; }
+  .resource-grid .contact-art { height:40px; }
+  .resource-grid .card-meta { display:none; }
+  .resource-grid .product-title strong { font-size:14px; }
+  .resource-grid .trust-badge { font-size:15px; min-width:35px; }
+  .resource-grid .product-card .inspect-button { top:61px; }
+  .resource-grid .relevant-stats>span { padding:1px 4px; font-size:10px; }
+  .resource-grid .card-status { font-size:9px; }
+  .resource-grid .section-head { margin-bottom:7px; }
+  .resource-grid .section-head h2 { font-size:14px; }
+  .workspace { display:none; position:fixed; left:0; right:0; bottom:129px; width:100%; max-height:57dvh; overflow:auto; border:2px solid #aabd92; border-radius:17px 17px 0 0; z-index:12; box-shadow:0 -8px 30px #173b2e25; }
+  #game[data-panel="review"] .workspace { display:block; }
+  .workspace-content { padding:12px; }
+  .workspace h2 { font-size:19px; }
+  .mobile-dock { z-index:15; min-height:129px; }
+  .mobile-dock .dock-shortcuts button { min-height:28px; }
+  .mobile-dock>div { gap:5px; }
+  .mobile-dock .text-button { font-size:10px; }
+  .mobile-dock .primary-button { min-height:38px; }
+  body { padding-bottom:150px; }
+  #toast { bottom:139px; z-index:45; }
+  .trade-stage { top:43%; padding:14px 12px; }
+  .trade-stage h2 { font-size:18px; }
+  .stage-cards { gap:5px; min-height:94px; }
+  .stage-cards .stage-card { width:70px; height:94px; padding:4px; }
+  .stage-cards .stage-card>b { font-size:9px; }
+  .stage-needs span { font-size:11px; padding:3px 7px; }
+  .stage-stamp { font-size:20px; }
+  .skip-motion { bottom:16px; right:12px; padding:8px 14px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .game-card,.stage-needs span,.stage-stamp { transition:none; }
+  .rival-pointer { animation:none; }
+}

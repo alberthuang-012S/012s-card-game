@@ -1,0 +1,107 @@
+/* Full original card faces, with readable rule values retained outside the image. */
+.card-thumbnail { display:none; }
+.card-thumbnail img { width:100%; height:100%; object-fit:contain; aspect-ratio:63/88; display:block; }
+#game[data-card-view="face"] .game-card .card-thumbnail { display:flex; justify-content:center; align-items:center; min-height:0; width:100%; }
+#game[data-card-view="face"] .game-card .target-art,
+#game[data-card-view="face"] .game-card .product-art,
+#game[data-card-view="face"] .game-card .contact-art { display:none; }
+#game[data-card-view="face"] .game-card .card-thumbnail img { max-height:100%; }
+#game[data-card-view="face"] .target-card .card-thumbnail { flex:1; }
+#game[data-card-view="face"] .target-card .card-title { margin:4px 0; font-size:12px; }
+#game[data-card-view="face"] .target-card .card-status { display:none; }
+#game[data-card-view="face"] .target-card .card-foot { font-size:9px; }
+#game[data-card-view="face"] .target-card .inspect-button { top:6px; right:6px; }
+#game[data-card-view="face"] .target-card .card-meta { min-height:18px; margin-bottom:3px; padding-right:24px; }
+#game[data-card-view="face"] .resource-grid .card-thumbnail { flex:1; }
+#game[data-card-view="face"] .resource-grid .select-card { display:flex; flex-direction:column; }
+#game[data-card-view="face"] .resource-grid .product-title { flex-shrink:0; }
+#game[data-card-view="face"] .resource-grid .product-title .trust-badge { flex-direction:row; gap:3px; font-size:12px; padding:2px 4px; }
+#game[data-card-view="face"] .resource-grid .contact-effect,
+#game[data-card-view="face"] .resource-grid .contact-card .card-status { display:none; }
+#game[data-card-view="face"] .resource-grid .contact-values { flex-shrink:0; font-size:10px; }
+#game[data-card-view="face"] .resource-grid .contact-values>span { font-size:9px; white-space:nowrap; }
+#game[data-card-view="face"] .resource-grid .contact-values b { font-size:11px; }
+#game[data-card-view="face"] .resource-grid .inspect-button { top:6px; right:5px; }
+#game[data-card-view="face"] .prep-panel { flex:1; min-height:0; display:flex; flex-direction:column; }
+#game[data-card-view="face"] .prep-panel .section-head { margin-bottom:5px; }
+#game[data-card-view="face"] .prep-panel h2 { font-size:14px; }
+#game[data-card-view="face"] .prep-panel .section-description { display:none; }
+#game[data-card-view="face"] .prep-panel .card-rail { flex:1; min-height:0; }
+#game[data-card-view="face"] .prep-panel .game-card { flex-basis:240px; }
+#game[data-card-view="face"] .prep-panel .select-card { display:grid; grid-template-columns:80px minmax(0,1fr); grid-template-rows:30px auto 25px; gap:4px 7px; padding:5px 7px; }
+#game[data-card-view="face"] .prep-panel .card-thumbnail { grid-column:1; grid-row:1/4; height:115px; }
+#game[data-card-view="face"] .prep-panel .card-meta { display:none; }
+#game[data-card-view="face"] .prep-panel .product-title { grid-column:2; grid-row:1; margin:0; }
+#game[data-card-view="face"] .prep-panel .product-title strong { font-size:14px; }
+#game[data-card-view="face"] .prep-panel .trust-badge { font-size:13px; padding:3px; min-width:25px; }
+#game[data-card-view="face"] .prep-panel .trust-badge small { display:none; }
+#game[data-card-view="face"] .prep-panel .relevant-stats { grid-column:2; grid-row:2; margin:0; min-height:0; }
+#game[data-card-view="face"] .prep-panel .relevant-stats>span { font-size:9px; padding:0 3px; }
+#game[data-card-view="face"] .prep-panel .card-status { grid-column:2; grid-row:3; font-size:10px; margin:0; padding-top:3px; }
+#game[data-card-view="face"] .prep-panel .inspect-button { top:6px; right:5px; }
+#game[data-card-view="face"] .event-box>img,
+#game[data-card-view="face"] .won-customers img,
+#game[data-card-view="face"] .draft-visual img { object-fit:contain; }
+.library-grid .library-card .library-face { object-fit:contain; height:210px; background:#f1f1e7; }
+#hover-preview { position:fixed; z-index:75; pointer-events:none; background:#fffef5; border:1px solid #a6b89a; border-radius:11px; padding:5px; box-shadow:0 12px 40px #122f4a45; }
+#hover-preview[hidden] { display:none; }
+#hover-preview>img { display:block; width:100%; height:auto; aspect-ratio:63/88; object-fit:contain; border-radius:6px; }
+#hover-preview>div { padding:4px 5px 3px; }
+#hover-preview strong { display:block; font-size:12px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+#hover-preview small { display:block; font-size:10px; color:#6b775f; }
+.motion-playing #hover-preview { display:none; }
+@media(min-width:951px) and (min-height:650px) {
+  #game[data-card-view="face"] .targets-panel .select-card { padding:5px 6px 25px; }
+  #game[data-card-view="face"] .targets-panel .card-thumbnail { overflow:hidden; }
+  #game[data-card-view="face"] .target-card .card-foot { display:none; }
+  #game[data-card-view="face"] .target-card .card-title { font-size:11px; line-height:1.3; flex-shrink:0; }
+  #game[data-card-view="face"] .target-card .need-chips { flex-shrink:0; }
+  #game[data-card-view="face"] .shelf-panel .select-card { display:grid; grid-template-columns:40px minmax(0,1fr); grid-template-rows:23px minmax(0,1fr); gap:2px 6px; padding:3px 5px; }
+  #game[data-card-view="face"] .shelf-panel .card-thumbnail { grid-column:1; grid-row:1/3; height:57px; }
+  #game[data-card-view="face"] .shelf-panel .product-title { grid-column:2; grid-row:1; flex-wrap:nowrap; }
+  #game[data-card-view="face"] .shelf-panel .trust-badge small { display:none; }
+  #game[data-card-view="face"] .shelf-panel .relevant-stats { grid-column:2; grid-row:2; }
+  #game[data-card-view="face"] .shelf-panel .inspect-button { top:4px; left:auto; right:3px; width:19px; height:19px; opacity:.92; }
+  #game[data-card-view="face"] .shelf-panel .product-title { padding-right:17px; }
+  #game[data-card-view="face"] .shelf-panel .product-title strong { font-size:11px; }
+  #game[data-card-view="face"] .resource-grid .game-card { flex-basis:136px; }
+  #game[data-card-view="face"] .resource-grid .card-thumbnail { overflow:hidden; }
+  #game[data-card-view="face"] .resource-grid .product-title strong { font-size:12px; }
+  #game[data-card-view="face"] .resource-grid .contact-card .card-title { margin:2px 0; font-size:11px; }
+  #game[data-card-view="face"] .resource-grid .contact-card .inspect-button { width:21px; height:21px; }
+  #game[data-card-view="face"] .resource-grid .relevant-stats { flex-shrink:0; }
+}
+@media(min-width:951px) and (min-height:650px) and (max-height:820px) {
+  #game[data-card-view="face"] .targets-panel .target-card { flex:0 0 185px; }
+  #game[data-card-view="face"] .targets-panel .select-card { display:grid; grid-template-columns:75px minmax(0,1fr); grid-template-rows:19px auto minmax(0,1fr); gap:2px 6px; padding:5px 6px 25px; }
+  #game[data-card-view="face"] .targets-panel .card-thumbnail { grid-column:1; grid-row:1/4; height:100%; }
+  #game[data-card-view="face"] .target-card .card-meta { grid-column:2; grid-row:1; margin:0; justify-content:flex-start; }
+  #game[data-card-view="face"] .target-card .card-meta>span { display:none; }
+  #game[data-card-view="face"] .target-card .card-title { grid-column:2; grid-row:2; margin:0; }
+  #game[data-card-view="face"] .target-card .need-chips { grid-column:2; grid-row:3; display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:2px; }
+}
+@media(min-width:951px) and (max-height:649px) {
+  #game[data-card-view="face"] .game-card .card-thumbnail { height:180px; flex:none; }
+}
+@media(max-width:950px) {
+  #game[data-card-view="face"] .targets-panel .card-thumbnail { height:177px; flex:none; }
+  #game[data-card-view="face"] .target-card .card-title { min-height:0; }
+  #game[data-card-view="face"] .targets-panel .target-card .select-card { padding:7px 7px 32px; }
+  #game[data-card-view="face"] .target-card .card-foot { display:none; }
+  #game[data-card-view="face"] .target-card .need-chips>span { font-size:10px; }
+  #game[data-card-view="face"] .shelf-panel .select-card { display:grid; grid-template-columns:52px minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); padding:6px; gap:3px 5px; }
+  #game[data-card-view="face"] .shelf-panel .card-thumbnail { grid-column:1; grid-row:1/3; height:77px; }
+  #game[data-card-view="face"] .shelf-panel .product-title { grid-column:2; grid-row:1; flex-wrap:wrap; padding-right:5px; }
+  #game[data-card-view="face"] .shelf-panel .product-title strong { font-size:12px; }
+  #game[data-card-view="face"] .shelf-panel .trust-badge { font-size:12px; }
+  #game[data-card-view="face"] .shelf-panel .trust-badge small { display:none; }
+  #game[data-card-view="face"] .shelf-panel .relevant-stats { grid-column:2; grid-row:2; }
+  #game[data-card-view="face"] .shelf-panel .relevant-stats>span { font-size:8px; }
+  #game[data-card-view="face"] .shelf-panel .inspect-button { left:auto; right:4px; top:5px; width:21px; height:21px; }
+  #game[data-card-view="face"] .resource-grid .card-thumbnail { height:122px; flex:none; }
+  #game[data-card-view="face"] .resource-grid .card-title { font-size:12px; margin:4px 0; }
+  #game[data-card-view="face"] .resource-grid .card-status { display:none; }
+  #game[data-card-view="face"] .resource-grid .trust-badge small { display:none; }
+  #game[data-card-view="face"] .prep-panel .card-thumbnail { height:150px; flex:none; }
+  #game[data-card-view="face"] .prep-panel .product-art { display:none; }
+}

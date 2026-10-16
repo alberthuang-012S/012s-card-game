@@ -1,0 +1,55 @@
+body[data-screen="game"] .tools-menu { margin-left:0; }
+.history-launch { margin-left:auto; min-height:36px; padding:6px 12px; background:#fffdf0; border:1px solid #c0ccb4; border-radius:9px; color:#355840; font-size:12px; white-space:nowrap; }
+dialog.history-dialog { width:min(1000px,calc(100vw - 24px)); max-width:calc(100vw - 24px); height:min(820px,calc(100dvh - 32px)); max-height:calc(100dvh - 32px); padding:20px; overflow:hidden; border-radius:18px; }
+dialog.history-dialog[open] { display:flex; flex-direction:column; gap:12px; }
+.history-heading { display:flex; align-items:center; gap:12px; margin-right:40px; }
+.history-heading h2 { font-size:22px; margin:0; }
+#history-count { font-size:11px; color:#738166; }
+.history-summary { display:flex; justify-content:center; align-items:center; gap:25px; padding:8px 0; background:#eaf0df; border-radius:10px; }
+.history-summary>div { display:flex; gap:10px; align-items:baseline; }
+.history-summary span { color:#536b4c; font-size:12px; }
+.history-summary strong { font-size:25px; color:#284f3c; }
+.history-summary strong small { font-size:11px; font-weight:400; }
+.history-summary>i { font-style:normal; color:#7c8c6f; }
+.history-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; }
+.history-filters { display:flex; gap:5px; flex-wrap:wrap; }
+.history-filters button { min-height:36px; border:0; background:#edf1e5; border-radius:7px; padding:6px 12px; font-size:12px; color:#526b4c; }
+.history-filters button[aria-pressed="true"] { color:#fffdf0; background:#315840; }
+.history-selects { display:flex; gap:8px; }
+.history-selects select { width:auto; min-width:120px; margin:0; min-height:36px; padding:6px 9px; font-size:12px; }
+.history-list { flex:1; min-height:0; overflow:auto; overscroll-behavior:contain; padding:0 4px 15px 0; }
+.journal-round h3 { position:sticky; top:0; z-index:2; display:flex; align-items:center; gap:12px; margin:0; padding:10px 8px; background:#f8faee; color:#476342; font-size:13px; border-bottom:1px solid #dbe3ce; }
+.journal-round h3 small { font-size:11px; font-weight:400; }
+.journal-entry { padding:12px 8px; border-bottom:1px solid #e2e8d7; }
+.journal-entry>header { display:flex; align-items:center; gap:9px; }
+.journal-entry>header strong { font-size:13px; color:#36563d; font-weight:500; }
+.journal-actor { min-width:35px; text-align:center; font-size:10px; border-radius:5px; padding:3px 7px; background:#e8eedb; color:#516d4b; }
+.journal-actor.actor-1 { background:#f4e8d8; color:#8a6144; }
+.journal-points { color:#366b43; font-size:14px; margin-left:auto; }
+.journal-cards { display:flex; gap:10px; overflow-x:auto; padding:10px 2px 5px; scrollbar-width:thin; }
+.journal-cards button { position:relative; flex:0 0 100px; padding:0; border:0; background:transparent; border-radius:7px; }
+.journal-cards img { display:block; width:100%; height:auto; aspect-ratio:63/88; object-fit:contain; border-radius:6px; box-shadow:0 2px 4px #2a43291c; }
+.journal-entry p { font-size:12px; color:#5b7053; line-height:1.9; margin:7px 0 0; overflow-wrap:anywhere; }
+.journal-explanation summary { cursor:pointer; width:max-content; min-height:32px; padding:5px 0; font-size:11px; color:#617754; }
+.journal-empty { padding:30px 10px; text-align:center; font-size:13px; color:#667b5c; }
+@media(max-width:600px) {
+ .topbar { gap:8px; padding-inline:12px; }
+ .topbar .brand { gap:7px; min-width:0; }
+ .topbar .brand strong { font-size:13px; white-space:nowrap; }
+ .topbar .brand-mark { width:28px; height:28px; font-size:19px; }
+ .history-launch { font-size:11px; padding:6px 8px; }
+ .tools-menu>summary { padding:6px 9px; font-size:12px; white-space:nowrap; }
+ dialog.history-dialog { padding:14px 12px; }
+ .history-heading h2 { font-size:19px; }
+ .history-summary { gap:15px; padding:7px 0; }
+ .history-summary>div { gap:5px; }
+ .history-summary span { font-size:10px; }
+ .history-summary strong { font-size:23px; }
+ .history-toolbar { gap:7px; }
+ .history-selects { flex:1; }
+ .history-selects select { min-width:0; width:50%; flex:1; }
+ .history-filters button { min-height:36px; padding:6px 10px; font-size:11px; }
+ .journal-cards { gap:8px; }
+ .journal-cards button { flex-basis:84px; }
+ .journal-entry { padding:11px 3px; }
+}
